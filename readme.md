@@ -24,7 +24,7 @@ irb> haru = (Walnut.find :dog)[0]
 => :dog.({name: "Haru"})
 ```
 
-This data is persisted in the `./store` directory. Any time you mutate a field of a  it gets persisted to disk:
+This data is persisted in the `./store` directory. Any time you mutate a field of a Walnut Object, the change gets persisted immediately to disk:
 
 ```ruby
 irb> dog.name = 'Haru the Dog'
