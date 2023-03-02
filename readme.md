@@ -36,6 +36,6 @@ There is currently no way to do multiple steps atomically. It would be nice to h
 
 ## todos
 
-[ ] describe references in the readme
-[ ] recursive references aren't supported well at the moment
-[ ] add homogeneous data constraint
+- [ ] describe references in the readme
+- [ ] recursive references aren't supported well at the moment
+- [ ] add homogeneous data constraint
