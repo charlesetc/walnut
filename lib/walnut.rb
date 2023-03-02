@@ -20,7 +20,7 @@ module Walnut
   end
 
   def self.find(tag)
-    Dir["store/person-*.json"].map do |filename|
+    Dir["store/#{tag}-*.json"].map do |filename|
       read_from_file(filename)
     end
   end
