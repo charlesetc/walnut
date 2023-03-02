@@ -12,8 +12,7 @@ class WalnutDB
 
   def save(variant)
     $saving = true 
-    File.write("#{@path}/#{variant.__walnut_tag}-#{variant.__walnut_id}.json",
-               variant.internal_json)
+    File.write("#{@path}/#{variant.__walnut_tag}-#{variant.__walnut_id}.json", variant.internal_json)
     $saving = false
   end
 
