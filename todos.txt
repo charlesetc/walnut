@@ -1,5 +1,5 @@
 # Todos
 
-- Make it so you can only store homogeneous data except for objects.
-- And add the ability to map this data.
+- Recursive references will mess everything up.
+- Make it so you can only store homogeneous data except for objects, and add the ability to map this data.
 - Don't query the whole reference tree when you read one reference, make the reading lazy upon index or print.
