@@ -32,11 +32,19 @@ irb> `cat store/dog-*`
 => "{\"name\":\"Haru the Dog\"}
 ```
 
+## how to install
+
+```
+git clone https://github.com/charlesetc/walnut
+make
+```
+
+And now `irb -r walnut` will work.
+
 ## future work
 
 - Support for atomic transactions.
 - It would be nice to have a better story/pattern for changing the data layout, i.e. some standardization of migrations.
-
 
 ## todos
 
