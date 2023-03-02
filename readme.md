@@ -10,21 +10,21 @@ Want to save something to disk?
 
 it's been saved. Want to get all the `:dog`'s?
 
-```irb
+```ruby
 irb> Walnut.find :dog
 => [:dog.({name: "Haru"})]
 ```
 
 This is a normal ruby array:
 
-```irb
+```ruby
 irb> haru = (Walnut.find :dog)[0]
 => :dog.({name: "Haru"})
 ```
 
 This data is persisted in the `./store` directory. Any mutations get saved to disk immediately:
 
-```irb
+```ruby
 irb> dog.name = 'Haru the Dog'
 irb> `cat store/dog-*`
 => "{\"name\":\"Haru\"}
