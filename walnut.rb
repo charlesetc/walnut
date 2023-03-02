@@ -1,7 +1,7 @@
 require "nanoid"
 require "json"
 
-$saving = false 
+$saving_walnut_value = false 
 
 class WalnutDB
 
@@ -11,9 +11,9 @@ class WalnutDB
   end
 
   def save(variant)
-    $saving = true 
+    $saving_walnut_value = true 
     File.write("#{@path}/#{variant.__walnut_tag}-#{variant.__walnut_id}.json", variant.internal_json)
-    $saving = false
+    $saving_walnut_value = false
   end
 
   def read(id)
@@ -88,7 +88,7 @@ class Variant
   end
 
   def to_json(json_state)
-    if $saving
+    if $saving_walnut_value
       Walnut.save(self)
     end
     return {
