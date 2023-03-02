@@ -2,42 +2,44 @@
 
 Walnut is a new interface for persistent state.
 
-Want to save something to disk?
+Want to save something to disk? Create a 'Walnut Object' like so:
 
 ```ruby
 :dog.({name: "Haru"})  
 ```
 
-it's been saved. Want to get all the `:dog`'s?
+...and it's been saved.
+
+Want to get all the `:dog`'s?
 
 ```ruby
 irb> Walnut.find :dog
 => [:dog.({name: "Haru"})]
 ```
 
-This is a normal ruby array:
+This is a ruby array:
 
 ```ruby
 irb> haru = (Walnut.find :dog)[0]
 => :dog.({name: "Haru"})
 ```
 
-This data is persisted in the `./store` directory. Any mutations get saved to disk immediately:
+This data is persisted in the `./store` directory. Any time you mutate a field of a  it gets persisted to disk:
 
 ```ruby
 irb> dog.name = 'Haru the Dog'
 irb> `cat store/dog-*`
-=> "{\"name\":\"Haru\"}
+=> "{\"name\":\"Haru the Dog\"}
 ```
 
 ## future work
 
-- There is currently no way to do multiple steps atomically. It would be nice to have a lock that allows for atomic transactions.
+- Support for atomic transactions.
 - It would be nice to have a better story/pattern for changing the data layout, i.e. some standardization of migrations.
 
 
 ## todos
 
-- [ ] describe references in the readme
+- [ ] describe sub-references in the readme
 - [ ] recursive references aren't supported well at the moment
 - [ ] add homogeneous data constraint
