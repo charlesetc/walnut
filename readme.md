@@ -32,9 +32,9 @@ irb> `cat store/dog-*`
 => "{\"name\":\"Haru the Dog\"}
 ```
 
-## how to install
+## installation
 
-```
+```bash
 git clone https://github.com/charlesetc/walnut
 make
 ```
