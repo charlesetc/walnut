@@ -32,7 +32,9 @@ irb> `cat store/dog-*`
 
 ## future work
 
-There is currently no way to do multiple steps atomically. It would be nice to have a lock that allows for atomic transactions.
+- There is currently no way to do multiple steps atomically. It would be nice to have a lock that allows for atomic transactions.
+- It would be nice to have a better story/pattern for changing the data layout, i.e. some standardization of migrations.
+
 
 ## todos
 
