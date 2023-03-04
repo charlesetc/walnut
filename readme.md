@@ -13,23 +13,33 @@ Want to save something to disk? Create a 'Walnut Object' like so:
 Want to get all the `:dog`'s?
 
 ```ruby
-irb> Walnut.find :dog
+irb> :dog.find
 => [:dog.({name: "Haru"})]
 ```
 
 This is a ruby array:
 
 ```ruby
-irb> haru = (Walnut.find :dog)[0]
+irb> haru = :dog.find[0]
 => :dog.({name: "Haru"})
 ```
 
 This data is persisted in the `./store` directory. Any time you mutate a field of a Walnut Object, the change gets persisted immediately to disk:
 
 ```ruby
-irb> dog.name = 'Haru the Dog'
+irb> haru.name = 'Haru the Dog'
 irb> `cat store/dog-*`
 => "{\"name\":\"Haru the Dog\"}
+```
+
+We can also use `find` to filter by a particular attribute:
+
+```ruby
+irb> :dog.({name: "Momo"})
+irb> :dog.find
+=> [:dog.({name: "Haru"}), :dog.({name: "Momo"})]
+irb> :dog.find({name: "Momo"})
+=> [:dog.({name: "Momo"})]
 ```
 
 ## installation

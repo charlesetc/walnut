@@ -3,6 +3,10 @@ class Symbol
   def call(fields = {})
     return Walnut::Variant.create_and_persist(self, fields) 
   end
+
+  def find(fields = {})
+    return Walnut.find_with_fields(self, fields)
+  end
 end
 
 module Walnut

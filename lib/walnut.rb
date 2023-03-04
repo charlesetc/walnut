@@ -25,16 +25,19 @@ module Walnut
     end
   end
 
+  def self.find_with_fields(tag, fields)
+    results = []
+    Dir["store/#{tag}-*.json"].each do |filename|
+      v = read_from_file(filename)
+      results << v if fields.map { |field, value| begin v.send(field) == value rescue false end }.all?
+    end
+    return results
+  end
 
   private
 
-    def self.parse_filename(filename)
-      File.basename(filename, ".json").split("-") => [tag, id]
-      return { tag:, id: }
-    end
-
     def self.read_from_file(filename)
-      parse_filename(filename) => {tag:, id:}
+      File.basename(filename, ".json").split("-") => [tag, id]
       JSON.parse(File.read(filename)) => fields
       Variant.recreate_from_file(tag, id, fields)
     end
