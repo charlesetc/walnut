@@ -37,7 +37,7 @@ We can also use `find` to filter by a particular attribute:
 ```ruby
 irb> :dog.({name: "Momo"})
 irb> :dog.find
-=> [:dog.({name: "Haru"}), :dog.({name: "Momo"})]
+=> [:dog.({name: "Haru the Dog"}), :dog.({name: "Momo"})]
 irb> :dog.find({name: "Momo"})
 => [:dog.({name: "Momo"})]
 ```
