@@ -13,14 +13,14 @@ haru = :dog.({name: "Haru"})
 Want to get all the `:dog`'s?
 
 ```ruby
-irb> :dog.find
+irb> :dog.all
 => [:dog.({name: "Haru"})]
 ```
 
-This is a ruby array:
+We can get a single dog by name:
 
 ```ruby
-irb> haru = :dog.find[0]
+irb> haru = :dog.find_one({name: "Haru"})
 => :dog.({name: "Haru"})
 ```
 
@@ -32,13 +32,13 @@ irb> `cat store/dog-*`
 => "{\"name\":\"Haru the Dog\"}
 ```
 
-We can also use `find` to filter by a particular attribute:
+Lastly, we can use `find_many` to filter by a particular attribute:
 
 ```ruby
 irb> :dog.({name: "Momo"})
-irb> :dog.find
+irb> :dog.all
 => [:dog.({name: "Haru the Dog"}), :dog.({name: "Momo"})]
-irb> :dog.find({name: "Momo"})
+irb> :dog.find_many({name: "Momo"})
 => [:dog.({name: "Momo"})]
 ```
 

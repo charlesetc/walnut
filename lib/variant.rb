@@ -4,9 +4,23 @@ class Symbol
     return Walnut::Variant.new(self, nanoid(), fields).save
   end
 
-  def find(fields = {})
+  def find_many(fields = {})
     return Walnut.find_with_fields(self, fields)
   end
+  alias :findmany :find_many
+  alias :all :find_many
+
+  def find_one(fields = {})
+    results = findmany(fields)
+    if results.length == 0
+      return nil
+    elsif results.length == 1
+      return results[0]
+    else
+      raise "#{self}.find_one - expected a single result but got multiple"
+    end
+  end
+  alias :findone :find_one
 
   alias :old_respond_to? :respond_to?
 
@@ -95,7 +109,7 @@ class Hash
 
   def recursive_map(&block)
     self.values.each do |value|
-      value.recursive_map(block) if value.respond_to?(:recursive_map)
+      value.recursive_map(&block) if value.respond_to?(:recursive_map)
     end
   end
 
@@ -105,7 +119,7 @@ class Array
 
   def recursive_map(&block)
     self.each do |value|
-      value.recursive_map(block) if value.respond_to?(:recursive_map)
+      value.recursive_map(&block) if value.respond_to?(:recursive_map)
     end
   end
 
