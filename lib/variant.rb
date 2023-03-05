@@ -1,5 +1,7 @@
 module Walnut
 
+  ID_STRING = "^walnut_id" 
+
   def self.nanoid(size=12) 
     Nanoid.generate(alphabet: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", size:)
   end
@@ -48,7 +50,7 @@ module Walnut
 
     def to_json(json_state)
       return {
-        __walnut_variant_id: @id,
+        Walnut::ID_STRING =>  @id,
         # tag: @tag, # might not need this so I commented it out
       }.to_json(json_state)
     end
