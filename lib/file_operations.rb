@@ -12,19 +12,20 @@ module Walnut
       read_from_file Dir["store/*-#{id}.json"][0]
     end
 
-    def self.find(tag)
+    def self.find_all(tag)
       Dir["store/#{tag}-*.json"].map do |filename|
         read_from_file(filename)
       end
     end
 
     def self.find_with_fields(tag, fields)
-      results = []
-      Dir["store/#{tag}-*.json"].each do |filename|
-        v = read_from_file(filename)
-        results << v if fields.map { |field, value| begin v.send(field) == value rescue false end }.all?
+      self.find_all(tag).filter do |v|
+        begin
+          fields.map { |field, value| v.send(field) == value }.all?
+        rescue
+          false
+        end
       end
-      return results
     end
 
     private

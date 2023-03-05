@@ -55,6 +55,7 @@ And now `irb -r walnut` should work.
 
 - Support for atomic transactions.
 - It would be nice to have a better story/pattern for changing the data layout, i.e. some standardization of migrations.
+- When an object is removed, its references should be too. How would this play with non-null type guarantees? Maybe you can only remove if there are no references?
 
 ## todos
 
