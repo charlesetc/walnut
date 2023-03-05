@@ -5,10 +5,10 @@ Walnut is a new interface for persistent state.
 Want to save something to disk? Create a 'Walnut Object' like so:
 
 ```ruby
-:dog.({name: "Haru"})  
+haru = :dog.({name: "Haru"})  
 ```
 
-...and it's been saved.
+...and it's been saved!
 
 Want to get all the `:dog`'s?
 
@@ -49,7 +49,7 @@ git clone https://github.com/charlesetc/walnut
 make
 ```
 
-And now `irb -r walnut` will work.
+And now `irb -r walnut` should work.
 
 ## future work
 
