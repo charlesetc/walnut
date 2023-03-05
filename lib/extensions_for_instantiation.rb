@@ -7,7 +7,7 @@ class Hash
   def instantiate_walnut_references
     self.each do |key, value|
       value.instantiate_walnut_references if value.respond_to? :instantiate_walnut_references
-      self[key] = Walnut.read(value["__walnut_variant_id"]) if is_walnut_reference?(value)
+      self[key] = Walnut::FileOperations.read(value["__walnut_variant_id"]) if is_walnut_reference?(value)
     end
   end
 end
@@ -16,7 +16,7 @@ class Array
   def instantiate_walnut_references
     self.map! do |value|
       value.instantiate_walnut_references if value.respond_to? :instantiate_walnut_references
-      is_walnut_reference?(value) ? Walnut.read(value["__walnut_variant_id"]) : value
+      is_walnut_reference?(value) ? Walnut::FileOperations.read(value["__walnut_variant_id"]) : value
     end
   end
 end

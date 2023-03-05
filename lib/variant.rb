@@ -1,35 +1,3 @@
-
-class Symbol
-  def call(fields = {})
-    fields[:created_at] = fields[:updated_at] = Time.now 
-    return Walnut::Variant.new(self, Walnut.nanoid(), fields).save
-  end
-
-  def find_many(fields = {})
-    return Walnut.find_with_fields(self, fields)
-  end
-  alias :findmany :find_many
-  alias :all :find_many
-
-  def find_one(fields = {})
-    results = findmany(fields)
-    if results.length == 0
-      return nil
-    elsif results.length == 1
-      return results[0]
-    else
-      raise "#{self}.find_one - expected a single result but got multiple"
-    end
-  end
-  alias :findone :find_one
-
-  alias :old_respond_to? :respond_to?
-
-  def respond_to?(m)
-    m == :call ? false : super
-  end
-end
-
 module Walnut
 
   def self.nanoid(size=12) 
@@ -46,7 +14,7 @@ module Walnut
       return self 
     end
 
-    def __walnut_id
+    def id
       @id
     end
 
@@ -94,7 +62,7 @@ module Walnut
     end
 
     def save
-      FileUtils.mkdir_p(Walnut::DB)
+      Walnut::FileOperations::init
       self.recursive_map do |variant|
         File.write(self.filename, @fields.to_json)
       end
