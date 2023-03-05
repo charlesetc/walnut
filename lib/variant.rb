@@ -1,11 +1,5 @@
 module Walnut
 
-  ID_STRING = "^walnut_id" 
-
-  def self.nanoid(size=12) 
-    Nanoid.generate(alphabet: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", size:)
-  end
-
   class Variant
 
     def initialize(tag, id, fields)
@@ -22,7 +16,7 @@ module Walnut
 
     def eql?(other)
       return false unless other.class == Variant
-      self.__walnut_id == other.__walnut_id
+      self.id == other.id
     end
     alias :== :eql?
 
@@ -48,11 +42,11 @@ module Walnut
       ":#{@tag}.({#{fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')}})"
     end
 
-    def to_json(json_state)
+    def to_json(json_state = nil)
       return {
         Walnut::ID_STRING =>  @id,
         # tag: @tag, # might not need this so I commented it out
-      }.to_json(json_state)
+      }.to_json(json_state || JSON::Ext::Generator::State.new)
     end
 
     def instantiate_walnut_references

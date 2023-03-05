@@ -20,11 +20,9 @@ module Walnut
 
     def self.find_with_fields(tag, fields)
       self.find_all(tag).filter do |v|
-        begin
-          fields.map { |field, value| v.send(field) == value }.all?
-        rescue
-          false
-        end
+        fields.map do |field, value|
+          v.respond_to?(field) && v.send(field) == value
+        end.all?
       end
     end
 
