@@ -1,6 +1,7 @@
 
 class Symbol
   def call(fields = {})
+    fields[:created_at] = fields[:updated_at] = Time.now 
     return Walnut::Variant.new(self, Walnut.nanoid(), fields).save
   end
 
@@ -35,8 +36,25 @@ module Walnut
     Nanoid.generate(alphabet: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", size:)
   end
 
-
   class Variant
+
+    def initialize(tag, id, fields)
+      @tag = tag
+      @fields = fields.transform_keys { |k| k.to_s }
+      @id = id
+      initialize_field_accessors()
+      return self 
+    end
+
+    def __walnut_id
+      @id
+    end
+
+    def eql?(other)
+      return false unless other.class == Variant
+      self.__walnut_id == other.__walnut_id
+    end
+    alias :== :eql?
 
     def self.recreate_from_file(tag, id, fields)
       v = Variant.new(tag, id, fields)
@@ -44,26 +62,20 @@ module Walnut
       v
     end
 
-    def initialize(tag, id, fields)
-      @tag = tag
-      @fields = fields
-      @id = id
-      initialize_field_accessors()
-      return self 
-    end
-
     def initialize_field_accessors
       @fields.each do |key, _value|
         self.define_singleton_method(key) { @fields[key] }
         self.define_singleton_method("#{key}=".to_sym) do |newValue|
+          @fields["updated_at"] = Time.now
           @fields[key] = newValue
-          Walnut.save(self)
+          self.save
         end
       end
     end
 
     def inspect
-      ":#{@tag}.({#{@fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')}})"
+      fields = @fields.except("created_at", "updated_at")
+      ":#{@tag}.({#{fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')}})"
     end
 
     def to_json(json_state)
