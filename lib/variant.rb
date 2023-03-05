@@ -1,7 +1,7 @@
 
 class Symbol
   def call(fields = {})
-    return Walnut::Variant.new(self, nanoid(), fields).save
+    return Walnut::Variant.new(self, Walnut.nanoid(), fields).save
   end
 
   def find_many(fields = {})
@@ -30,6 +30,11 @@ class Symbol
 end
 
 module Walnut
+
+  def self.nanoid(size=12) 
+    Nanoid.generate(alphabet: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", size:)
+  end
+
 
   class Variant
 
@@ -91,10 +96,6 @@ module Walnut
     alias :delete :remove
     
     private
-
-      def self.nanoid(size=12) 
-       Nanoid.generate(alphabet: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", size:)
-      end
 
       def recursive_map(&block)
         @fields.recursive_map(&block)
