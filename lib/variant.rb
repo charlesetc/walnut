@@ -39,7 +39,7 @@ module Walnut
 
     def inspect
       fields = @fields.except("created_at", "updated_at")
-      ":#{@tag}.({#{fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')}})"
+      ":#{@tag}.(#{fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')})"
     end
 
     def to_json(json_state = nil)

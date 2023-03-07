@@ -5,7 +5,7 @@ Walnut is a new interface for persistent state.
 Want to save something to disk? Create a 'Walnut Object' like so:
 
 ```ruby
-haru = :dog.({name: "Haru"})  
+haru = :dog.(name: "Haru")  
 ```
 
 ...and it's been saved!
@@ -14,14 +14,14 @@ Want to get all the `:dog`'s?
 
 ```ruby
 irb> :dog.all
-=> [:dog.({name: "Haru"})]
+=> [:dog.(name: "Haru")]
 ```
 
 We can get a single dog by name:
 
 ```ruby
-irb> haru = :dog.find_one({name: "Haru"})
-=> :dog.({name: "Haru"})
+irb> haru = :dog.find_one(name: "Haru")
+=> :dog.(name: "Haru")
 ```
 
 This data is persisted in the `./store` directory. Any time you mutate a field of a Walnut Object, the change gets persisted immediately to disk:
@@ -35,11 +35,11 @@ irb> `cat store/dog-*`
 Lastly, we can use `find_many` to filter by a particular attribute:
 
 ```ruby
-irb> :dog.({name: "Momo"})
+irb> :dog.(name: "Momo")
 irb> :dog.all
-=> [:dog.({name: "Haru the Dog"}), :dog.({name: "Momo"})]
-irb> :dog.find_many({name: "Momo"})
-=> [:dog.({name: "Momo"})]
+=> [:dog.(name: "Haru the Dog"), :dog.(name: "Momo")]
+irb> :dog.find_many(name: "Momo")
+=> [:dog.(name: "Momo")]
 ```
 
 ## installation

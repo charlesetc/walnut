@@ -1,12 +1,12 @@
 
 class Symbol # Extending normal ruby symbols with a call syntax.
 
-  def call(fields = {})
+  def call(**fields)
     fields[:created_at] = fields[:updated_at] = Time.now 
     return Walnut::Variant.new(self, Walnut.nanoid(), fields).save
   end
 
-  def find_many(fields = {})
+  def find_many(**fields)
     return Walnut::FileOperations.find_with_fields(self, fields)
   end
   alias :findmany :find_many
