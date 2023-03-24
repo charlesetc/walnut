@@ -12,8 +12,8 @@ class Symbol # Extending normal ruby symbols with a call syntax.
   alias :findmany :find_many
   alias :all :find_many
 
-  def find_one(fields = {})
-    results = findmany(fields)
+  def find_one(**fields)
+    results = findmany(**fields)
     if results.length == 0
       return nil
     elsif results.length == 1
