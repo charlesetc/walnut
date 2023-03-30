@@ -18,6 +18,12 @@ module Walnut
       end
     end
 
+    def self.all_tags
+      Dir["store/*.json"].map do |filename|
+        File.basename(filename).split('-')[0]
+      end.uniq.map(&:to_sym)
+    end
+
     def self.find_with_fields(tag, fields)
       self.find_all(tag).filter do |v|
         fields.map do |field, value|

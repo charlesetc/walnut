@@ -7,7 +7,7 @@ module Walnut
       @fields = fields.transform_keys { |k| k.to_s }
       @id = id
       initialize_field_accessors()
-      return self 
+      return self
     end
 
     def id
@@ -49,6 +49,10 @@ module Walnut
       }.to_json(json_state || JSON::Ext::Generator::State.new)
     end
 
+    def to_json_full
+      @fields.merge({id: @id, tag: @tag}).to_json
+    end
+
     def instantiate_walnut_references
       @fields.instantiate_walnut_references
     end
@@ -70,7 +74,7 @@ module Walnut
     end
 
     alias :delete :remove
-    
+
     private
 
       def recursive_map(&block)
