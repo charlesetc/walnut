@@ -42,6 +42,7 @@ module Walnut
       ":#{@tag}.(#{fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')})"
     end
 
+
     def to_json(json_state = nil)
       return {
         Walnut::ID_STRING =>  @id,
@@ -49,8 +50,12 @@ module Walnut
       }.to_json(json_state || JSON::Ext::Generator::State.new)
     end
 
-    def to_json_full
-      @fields.merge({id: @id, tag: @tag}).to_json
+    def to_json_full(json_state = nil)
+      self.to_hash.to_json(json_state)
+    end
+
+    def to_hash
+      @fields.merge({id: @id, tag: @tag})
     end
 
     def instantiate_walnut_references
