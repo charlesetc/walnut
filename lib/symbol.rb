@@ -1,4 +1,3 @@
-
 class Symbol # Extending normal ruby symbols with a call syntax.
 
   def call(**fields)
@@ -9,6 +8,7 @@ class Symbol # Extending normal ruby symbols with a call syntax.
   def find_many(**fields)
     return Walnut::FileOperations.find_with_fields(self, fields)
   end
+
   alias :findmany :find_many
   alias :all :find_many
 

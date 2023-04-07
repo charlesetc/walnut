@@ -26,13 +26,25 @@ module Walnut
       v
     end
 
+    def set_field_and_save(field, value)
+      @fields["updated_at"] = Time.now
+      @fields[field] = value
+      self.save
+    end
+
+    def method_missing(name, *args)
+      return super unless name.to_s[-1] == '='
+      field = name[0..-2]
+      value = args[0]
+      set_field_and_save(field, value)
+    end
+
     def initialize_field_accessors
-      @fields.each do |key, _value|
-        self.define_singleton_method(key) { @fields[key] }
-        self.define_singleton_method("#{key}=".to_sym) do |newValue|
-          @fields["updated_at"] = Time.now
-          @fields[key] = newValue
-          self.save
+      @fields.each do |field, _value|
+        self.define_singleton_method(field) { @fields[field] }
+        # still define these just for the autocomplete in a repl \_(*v*)_/
+        self.define_singleton_method("#{field}=".to_sym) do |newValue|
+          set_field_and_save(field, newValue)
         end
       end
     end
@@ -86,7 +98,6 @@ module Walnut
         @fields.recursive_map(&block)
         block.call(self)
       end
-
   end
 
 end
