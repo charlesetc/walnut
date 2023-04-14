@@ -54,6 +54,11 @@ module Walnut
       ":#{@tag}.(#{fields.map { |k,v| "#{k}: #{v.inspect}" }.join(', ')})"
     end
 
+    def has_field?(field)
+      field = field.to_s
+      return true if field == "id"
+      @fields.has_key?(field)
+    end
 
     def to_json(json_state = nil)
       return {
@@ -79,7 +84,7 @@ module Walnut
     end
 
     def save
-      Walnut::FileOperations::init
+      Walnut::FileOperations::init  # just makes `store` if it isn't there
       self.recursive_map do |variant|
         File.write(self.filename, @fields.to_json)
       end
