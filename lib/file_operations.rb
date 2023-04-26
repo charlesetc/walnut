@@ -5,7 +5,13 @@ module Walnut
   module FileOperations
 
     def self.init
-      FileUtils.mkdir_p(Walnut::DB)
+      begin
+        FileUtils.mkdir_p(Walnut::DB)
+      rescue Errno::EEXIST
+        # ignore: not perfect, mabye we should instead try to readlink the file
+        # in case it's a symlink, but this at least lets the case when the dir
+        # exists to work
+      end
     end
 
     def self.read(id)
