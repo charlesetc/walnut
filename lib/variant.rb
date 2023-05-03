@@ -36,6 +36,7 @@ module Walnut
       if name.to_s[-1] == '='
         field = name[0..-2]
         value = args[0]
+        initialize_single_accessor(field)
         set_field_and_save(field, value)
       elsif name.to_s[-1] == '?'
         field = name[0..-2]
@@ -45,13 +46,17 @@ module Walnut
       end
     end
 
+    def initialize_single_accessor(field)
+      self.define_singleton_method(field) { @fields[field] }
+      # still define these just for the autocomplete in a repl \_(*v*)_/
+      self.define_singleton_method("#{field}=".to_sym) do |newValue|
+        set_field_and_save(field, newValue)
+      end
+    end
+
     def initialize_field_accessors
       @fields.each do |field, _value|
-        self.define_singleton_method(field) { @fields[field] }
-        # still define these just for the autocomplete in a repl \_(*v*)_/
-        self.define_singleton_method("#{field}=".to_sym) do |newValue|
-          set_field_and_save(field, newValue)
-        end
+        initialize_single_accessor(field)
       end
     end
 
