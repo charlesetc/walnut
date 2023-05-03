@@ -1,7 +1,7 @@
 class Symbol # Extending normal ruby symbols with a call syntax.
 
   def call(**fields)
-    fields[:created_at] = fields[:updated_at] = Time.now 
+    fields[:created_at] = fields[:updated_at] = Time.now
     return Walnut::Variant.new(self, Walnut.nanoid(), fields).save
   end
 
@@ -22,6 +22,11 @@ class Symbol # Extending normal ruby symbols with a call syntax.
       raise "#{self}.find_one - expected a single result but got multiple"
     end
   end
+
+  def find_latest
+    return Walnut::FileOperations.get_latest(self)
+  end
+
   alias :findone :find_one
 
   alias :old_respond_to? :respond_to?

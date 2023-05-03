@@ -18,6 +18,11 @@ module Walnut
       read_from_file Dir["store/*-#{id}.json"][0]
     end
 
+    def self.get_latest(tag)
+      filename = Dir["store/#{tag}-*.json"].sort_by {|f| File.mtime(f)}.last
+      filename ? read_from_file(filename) : nil
+    end
+
     def self.find_all(tag)
       Dir["store/#{tag}-*.json"].map do |filename|
         read_from_file(filename)
