@@ -33,10 +33,16 @@ module Walnut
     end
 
     def method_missing(name, *args)
-      return super unless name.to_s[-1] == '='
-      field = name[0..-2]
-      value = args[0]
-      set_field_and_save(field, value)
+      if name.to_s[-1] == '='
+        field = name[0..-2]
+        value = args[0]
+        set_field_and_save(field, value)
+      elsif name.to_s[-1] == '?'
+        field = name[0..-2]
+        return @fields[field]
+      else
+        return super
+      end
     end
 
     def initialize_field_accessors
