@@ -18,11 +18,6 @@ module Walnut
       read_from_file Dir["store/*-#{id}.json"][0]
     end
 
-    def self.get_latest(tag)
-      filename = Dir["store/#{tag}-*.json"].sort_by {|f| File.mtime(f)}.last
-      filename ? read_from_file(filename) : nil
-    end
-
     def self.find_all(tag)
       Dir["store/#{tag}-*.json"].map do |filename|
         read_from_file(filename)
@@ -41,6 +36,14 @@ module Walnut
           v.respond_to?(field) && v.send(field) == value
         end.all?
       end
+    end
+
+    def self.find_last(tag, fields)
+      self.find_with_fields(tag, fields).sort_by {|v| v.created_at}.last
+    end
+
+    def self.find_first(tag, fields)
+      self.find_with_fields(tag, fields).sort_by {|v| v.created_at}.first
     end
 
     private

@@ -23,12 +23,17 @@ class Symbol # Extending normal ruby symbols with a call syntax.
     end
   end
 
-  def find_latest
-    return Walnut::FileOperations.get_latest(self)
+  def find_last(**fields)
+    return Walnut::FileOperations.find_last(self, fields)
+  end
+
+  def find_first(**fields)
+    return Walnut::FileOperations.find_first(self, fields)
   end
 
   alias :findone :find_one
-
+  alias :findfirst :find_first
+  alias :findlast :find_last
   alias :old_respond_to? :respond_to?
 
   def respond_to?(m)
