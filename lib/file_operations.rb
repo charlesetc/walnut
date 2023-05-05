@@ -35,7 +35,7 @@ module Walnut
         fields.map do |field, value|
           v.respond_to?(field) && v.send(field) == value
         end.all?
-      end
+      end.sort_by { |p| p.created_at }
     end
 
     def self.find_last(tag, fields)
